@@ -33,9 +33,9 @@ class RecintosZoo {
     let recintosViaveis = [];
 
     for (const recinto of this.recintos) {
-      const biomasCompatíveis = animal.biomas.includes(recinto.bioma) || (recinto.bioma === 'savana e rio' && animal.biomas.includes('savana'));
+      const biomasCompativeis = animal.biomas.includes(recinto.bioma) || (recinto.bioma === 'savana e rio' && animal.biomas.includes('savana'));
 
-      if (!biomasCompatíveis) continue;
+      if (!biomasCompativeis) continue;
 
       let espacoOcupado = recinto.animais.reduce((total, { especie, quantidade }) => {
         let tamAnimal = this.animais[especie].tamanho;
@@ -45,14 +45,14 @@ class RecintosZoo {
       const espacoNecessario = animal.tamanho * quantidade;
       let espacoLivre = recinto.tamanho - espacoOcupado;
 
-      const carnívorosPresentes = recinto.animais.some(a => this.animais[a.especie].carnivoro);
-      if (carnívorosPresentes && !recinto.animais.some(a => a.especie === especie)) continue;
+      const carnivoroPresente = recinto.animais.some(a => this.animais[a.especie].carnivoro);
+      if (carnivoroPresente && !recinto.animais.some(a => a.especie === especie)) continue;
 
       if (especie === 'hipopotamo' && recinto.bioma !== 'savana e rio') continue;
 
       if (especie === 'macaco') {
         if (recinto.animais.length === 0 && quantidade < 2) continue;
-        if (carnívorosPresentes) continue;
+        if (carnivoroPresente) continue;
       }
 
       let espacoExtra = 0;
